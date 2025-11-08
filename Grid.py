@@ -13,8 +13,10 @@ screenX = tileSize * tilesX
 screenY = tileSize * tilesY
 screen = pygame.display.set_mode((screenX, screenY))
 mouseDown = False
-placeHolder = 0
-placeHolder2 = 0
+checkingX = 0
+checkingY = 0
+drawingX = 0
+drawingY = 0
 emptyList = []
 twoDList = []
 
@@ -23,8 +25,8 @@ def color(colorType):
         "sand": 'yellow',
         "blank": 'white',
         "metal": 'black',
-        "rock": "darkgrey",
-        "water": "water"
+        "rock": 'darkgrey',
+        "water": 'blue'
     }
     # I used chatgpt to help me, turns out I was returning the entire dictionary
     return colors.get(colorType, 'red')
@@ -42,6 +44,29 @@ def getAMat():
     else:
         return "blank"
 
+def blockCheck(Y, X):
+    if twoDList[Y][X] == "sand":
+        if twoDList[Y-1][X] == "blank":
+            twoDList[Y].pop(X)
+        elif twoDList[Y-1][X-1] == "blank":
+            twoDList[Y].pop(X)
+        elif twoDList[Y-1][X+1] == "blank":
+            twoDList[Y].pop(X)
+    elif twoDList[Y][X] == "rock":
+        if twoDList[Y-1][X] == "blank":
+            twoDList[Y].pop(X)
+    elif twoDList[Y][X] == "water":
+        if twoDList[Y-1][X] == "blank":
+            twoDList[Y].pop(X)
+        elif twoDList[Y-1][X-1] == "blank":
+            twoDList[Y].pop(X)
+        elif twoDList[Y-1][X+1] == "blank":
+            twoDList[Y].pop(X)
+        elif twoDList[Y][X-1] == "blank":
+            twoDList[Y].pop(X)
+        elif twoDList[Y][X+1] == "blank":
+            twoDList[Y].pop(X)
+
 for i2 in range(tilesY):
     rowList = []
     for i in range(tilesX):
@@ -54,6 +79,12 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+
+    #for checkingY in range(0, screenY // tileSize):
+    #    for checkingX in range(0, screenX // tileSize):
+    #        # Checks from bottom right to top left
+    #        blockCheck((tilesY - checkingY) - 1, (tilesX - checkingX) - 1)
+
     if event.type == pygame.MOUSEMOTION:
         x, y = pygame.mouse.get_pos()
 
@@ -63,17 +94,17 @@ while True:
     if mouseDown:
         if x > 0 and x < screenX and y > 0 and y < screenY:
             twoDList[math.floor(y/tileSize)].pop(math.floor(x/tileSize))
-            twoDList[math.floor(y/tileSize)].insert(math.floor(x/tileSize), "metal")        
+            twoDList[math.floor(y/tileSize)].insert(math.floor(x/tileSize), "sand")        
 
     if event.type == pygame.MOUSEBUTTONUP:
         mouseDown = False
 
     screen.fill('lightblue')
-    for placeHolder2 in range(0, screenY // tileSize):
-        for placeHolder in range(0, screenX // tileSize):
+    for drawingY in range(0, screenY // tileSize):
+        for drawingX in range(0, screenX // tileSize):
             # Inner
-            pygame.draw.rect(screen, color(twoDList[placeHolder2][placeHolder]), (placeHolder * tileSize, placeHolder2 * tileSize, tileSize, tileSize))
+            pygame.draw.rect(screen, color(twoDList[drawingY][drawingX]), (drawingX * tileSize, drawingY * tileSize, tileSize, tileSize))
             # Boarder
-            pygame.draw.rect(screen, "black", (placeHolder * tileSize, placeHolder2 * tileSize, tileSize, tileSize), tileSize//10)
+            pygame.draw.rect(screen, "black", (drawingX * tileSize, drawingY * tileSize, tileSize, tileSize), tileSize // 10)
 
     pygame.display.update()
