@@ -51,10 +51,10 @@ def blockCheck(Y, X):
         if twoDList[Y+1][X] == "blank":
             twoDList[Y+1][X] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
-        elif twoDList[Y+1][X-1] == "blank":
+        elif twoDList[Y+1][X-1] == "blank" and twoDList[Y][X-1] == "blank":
             twoDList[Y+1][X-1] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
-        elif twoDList[Y+1][X+1] == "blank":
+        elif twoDList[Y+1][X+1] == "blank" and twoDList[Y][X+1] == "blank":
             twoDList[Y+1][X+1] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
     elif twoDList[Y][X] == "rock":
@@ -65,10 +65,10 @@ def blockCheck(Y, X):
         if twoDList[Y+1][X] == "blank":
             twoDList[Y+1][X] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
-        elif twoDList[Y+1][X-1] == "blank":
+        elif twoDList[Y+1][X-1] == "blank" and twoDList[Y][X-1] == "blank":
             twoDList[Y+1][X-1] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
-        elif twoDList[Y+1][X+1] == "blank":
+        elif twoDList[Y+1][X+1] == "blank" and twoDList[Y][X+1] == "blank":
             twoDList[Y+1][X+1] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
             # Asked chatgpt to help with this, because I forgot that if I pop a unit in a list, the rest of the list moves down.
@@ -124,6 +124,6 @@ while True:
             # Boarder
             pygame.draw.rect(screen, "black", (drawingX * tileSize, drawingY * tileSize, tileSize, tileSize), tileSize // 10)
     
-    #time.sleep(0.01)
+    time.sleep(0.01)
 
     pygame.display.update()
