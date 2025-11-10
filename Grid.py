@@ -46,26 +46,35 @@ def getAMat():
 
 def blockCheck(Y, X):
     if twoDList[Y][X] == "sand":
-        if twoDList[Y-1][X] == "blank":
-            twoDList[Y].pop(X)
-        elif twoDList[Y-1][X-1] == "blank":
-            twoDList[Y].pop(X)
-        elif twoDList[Y-1][X+1] == "blank":
-            twoDList[Y].pop(X)
+        if twoDList[Y+1][X] == "blank":
+            twoDList[Y+1].pop(X)
+            twoDList[Y+1].insert(X, twoDList[Y][X])
+        elif twoDList[Y+1][X-1] == "blank":
+            twoDList[Y+1].pop(X-1)
+            twoDList[Y+1].insert(X-1, twoDList[Y][X])
+        elif twoDList[Y+1][X+1] == "blank":
+            twoDList[Y+1].pop(X+1)
+            twoDList[Y+1].insert(X+1, twoDList[Y][X])
     elif twoDList[Y][X] == "rock":
-        if twoDList[Y-1][X] == "blank":
-            twoDList[Y].pop(X)
+        if twoDList[Y+1][X] == "blank":
+            twoDList[Y+1].pop(X)
+            twoDList[Y+1].insert(X, twoDList[Y][X])
     elif twoDList[Y][X] == "water":
-        if twoDList[Y-1][X] == "blank":
-            twoDList[Y].pop(X)
-        elif twoDList[Y-1][X-1] == "blank":
-            twoDList[Y].pop(X)
-        elif twoDList[Y-1][X+1] == "blank":
-            twoDList[Y].pop(X)
+        if twoDList[Y+1][X] == "blank":
+            twoDList[Y+1].pop(X)
+            twoDList[Y+1].insert(X, twoDList[Y][X])
+        elif twoDList[Y+1][X-1] == "blank":
+            twoDList[Y+1].pop(X-1)
+            twoDList[Y+1].insert(X-1, twoDList[Y][X])
+        elif twoDList[Y+1][X+1] == "blank":
+            twoDList[Y+1].pop(X+1)
+            twoDList[Y+1].insert(X+1, twoDList[Y][X])
         elif twoDList[Y][X-1] == "blank":
-            twoDList[Y].pop(X)
+            twoDList[Y].pop(X-1)
+            twoDList[Y].insert(X-1, twoDList[Y][X])
         elif twoDList[Y][X+1] == "blank":
-            twoDList[Y].pop(X)
+            twoDList[Y].pop(X+1)
+            twoDList[Y].insert(X+1, twoDList[Y][X])
 
 for i2 in range(tilesY):
     rowList = []
@@ -80,10 +89,10 @@ while True:
             pygame.quit()
             sys.exit()
 
-    #for checkingY in range(0, screenY // tileSize):
-    #    for checkingX in range(0, screenX // tileSize):
-    #        # Checks from bottom right to top left
-    #        blockCheck((tilesY - checkingY) - 1, (tilesX - checkingX) - 1)
+    for checkingY in range(0, screenY // tileSize):
+        for checkingX in range(0, screenX // tileSize):
+            # Checks from bottom right to top left
+            blockCheck((tilesY - checkingY) - 1, (tilesX - checkingX) - 1)
 
     if event.type == pygame.MOUSEMOTION:
         x, y = pygame.mouse.get_pos()
