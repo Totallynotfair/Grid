@@ -12,7 +12,7 @@ x = 0
 y = 0
 screenX = tileSize * tilesX
 screenY = tileSize * tilesY
-screen = pygame.display.set_mode((screenX, screenY))
+screen = pygame.display.set_mode((screenX, screenY + 2 * tileSize))
 mouseDown = False
 checkingX = 0
 checkingY = 0
@@ -24,7 +24,7 @@ twoDList = []
 
 def color(colorType):
     colors = {
-        "sand": 'yellow',
+        "sand": 'tan',
         "blank": 'white',
         "metal": 'black',
         "rock": 'darkgrey',
@@ -108,7 +108,7 @@ while True:
     if mouseDown:
         if x > 0 and x < screenX and y > 0 and y < screenY:
             twoDList[math.floor(y/tileSize + 1)].pop(math.floor(x/tileSize + 1))
-            twoDList[math.floor(y/tileSize + 1)].insert(math.floor(x/tileSize + 1), "water")        
+            twoDList[math.floor(y/tileSize + 1)].insert(math.floor(x/tileSize + 1), "sand")        
 
     buttons = pygame.mouse.get_pressed()
     if not any(buttons):
@@ -124,6 +124,6 @@ while True:
             # Boarder
             pygame.draw.rect(screen, "black", (drawingX * tileSize, drawingY * tileSize, tileSize, tileSize), tileSize // 10)
     
-    time.sleep(0.10)
+    #time.sleep(0.01)
 
     pygame.display.update()
