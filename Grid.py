@@ -5,6 +5,7 @@ import math
 import time
 
 pygame.init()
+
 tileSize = 10
 tilesX = 50
 tilesY = 50
