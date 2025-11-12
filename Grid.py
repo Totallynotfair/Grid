@@ -4,7 +4,7 @@ import random
 import math
 import time
 
-pygame.init()
+pygame.display.init()
 
 tileSize = 10
 tilesX = 50
@@ -50,7 +50,6 @@ def getAMat():
 
 def blockCheck(Y, X):
     if twoDList[Y][X] == "sand":
-        print(twoDList[Y+1][X])
         if twoDList[Y+1][X] == "blank":
             twoDList[Y+1][X] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
@@ -107,15 +106,14 @@ while True:
     for checkingY in range(0, screenY // tileSize):
         for checkingX in range(0, screenX // tileSize):
             # Checks from bottom right to top left
-            blockCheck((tilesY - checkingY) - 1, (tilesX - checkingX) - 1)
+            blockCheck((tilesY - checkingY), (tilesX - checkingX))
 
     if event.type == pygame.MOUSEMOTION:
         x, y = pygame.mouse.get_pos()
     if mouseDown:
         if x > 0 and x < screenX and y > 0 and y < screenY:
-            print(math.floor(y/tileSize), math.floor(x/tileSize))
             twoDList[math.floor(y/tileSize)+1].pop(math.floor(x/tileSize)+1)
-            twoDList[math.floor(y/tileSize)+1].insert(math.floor(x/tileSize)+1, "sand")   
+            twoDList[math.floor(y/tileSize)+1].insert(math.floor(x/tileSize)+1, "water")   
 
     buttons = pygame.mouse.get_pressed()
     if not any(buttons):
