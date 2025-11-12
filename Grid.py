@@ -96,6 +96,10 @@ for i2 in range(tilesY + (borderThickness * 2)):
         rowList.append((random.randint(205,215),random.randint(175,185),random.randint(135,145)))
     sandColors.append(rowList)
 
+pygame.draw.rect(screen, color("sand", drawingX, drawingY), (drawingX * tileSize, drawingY * tileSize, tileSize, tileSize))
+
+
+
 while True:
     events = pygame.event.get()
     for event in events:
@@ -113,7 +117,7 @@ while True:
     if mouseDown:
         if x > 0 and x < screenX and y > 0 and y < screenY:
             twoDList[math.floor(y/tileSize)+1].pop(math.floor(x/tileSize)+1)
-            twoDList[math.floor(y/tileSize)+1].insert(math.floor(x/tileSize)+1, "water")   
+            twoDList[math.floor(y/tileSize)+1].insert(math.floor(x/tileSize)+1, "sand")   
 
     buttons = pygame.mouse.get_pressed()
     if not any(buttons):
