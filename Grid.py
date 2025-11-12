@@ -5,14 +5,14 @@ import math
 import time
 
 pygame.init()
-tileSize = 25
-tilesX = 30
-tilesY = 30
+tileSize = 10
+tilesX = 50
+tilesY = 50
 x = 0
 y = 0
 screenX = tileSize * tilesX
 screenY = tileSize * tilesY
-screen = pygame.display.set_mode((screenX, screenY + 2 * tileSize))
+screen = pygame.display.set_mode((screenX, screenY + 50))
 mouseDown = False
 checkingX = 0
 checkingY = 0
@@ -21,10 +21,11 @@ drawingY = 0
 borderThickness = 1
 emptyList = []
 twoDList = []
+sandColors = []
 
-def color(colorType):
+def color(colorType, X, Y):
     colors = {
-        "sand": 'tan',
+        "sand": sandColors[Y][X],
         "blank": 'white',
         "metal": 'black',
         "rock": 'darkgrey',
@@ -48,19 +49,20 @@ def getAMat():
 
 def blockCheck(Y, X):
     if twoDList[Y][X] == "sand":
+        print(twoDList[Y+1][X])
         if twoDList[Y+1][X] == "blank":
             twoDList[Y+1][X] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
         elif twoDList[Y+1][X-1] == "blank" and twoDList[Y][X-1] == "blank":
-            twoDList[Y+1][X-1] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
+           twoDList[Y+1][X-1] = twoDList[Y][X]
+           twoDList[Y][X] = "blank"
         elif twoDList[Y+1][X+1] == "blank" and twoDList[Y][X+1] == "blank":
-            twoDList[Y+1][X+1] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
+           twoDList[Y+1][X+1] = twoDList[Y][X]
+           twoDList[Y][X] = "blank"
     elif twoDList[Y][X] == "rock":
         if twoDList[Y+1][X] == "blank":
-            twoDList[Y+1][X] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
+           twoDList[Y+1][X] = twoDList[Y][X]
+           twoDList[Y][X] = "blank"
     elif twoDList[Y][X] == "water":
         if twoDList[Y+1][X] == "blank":
             twoDList[Y+1][X] = twoDList[Y][X]
@@ -89,6 +91,10 @@ for i2 in range(tilesY + (borderThickness * 2)):
         else:
             rowList.append("blank")
     twoDList.append(rowList)
+    rowList = []
+    for i in range(tilesX + (borderThickness * 2)):
+        rowList.append((random.randint(205,215),random.randint(175,185),random.randint(135,145)))
+    sandColors.append(rowList)
 
 while True:
     events = pygame.event.get()
@@ -104,11 +110,11 @@ while True:
 
     if event.type == pygame.MOUSEMOTION:
         x, y = pygame.mouse.get_pos()
-    
     if mouseDown:
         if x > 0 and x < screenX and y > 0 and y < screenY:
-            twoDList[math.floor(y/tileSize + 1)].pop(math.floor(x/tileSize + 1))
-            twoDList[math.floor(y/tileSize + 1)].insert(math.floor(x/tileSize + 1), "sand")        
+            print(math.floor(y/tileSize), math.floor(x/tileSize))
+            twoDList[math.floor(y/tileSize)+1].pop(math.floor(x/tileSize)+1)
+            twoDList[math.floor(y/tileSize)+1].insert(math.floor(x/tileSize)+1, "sand")   
 
     buttons = pygame.mouse.get_pressed()
     if not any(buttons):
@@ -120,10 +126,10 @@ while True:
     for drawingY in range(0, screenY // tileSize):
         for drawingX in range(0, screenX // tileSize):
             # Inner
-            pygame.draw.rect(screen, color(twoDList[drawingY+borderThickness][drawingX+borderThickness]), (drawingX * tileSize, drawingY * tileSize, tileSize, tileSize))
+            pygame.draw.rect(screen, color(twoDList[drawingY+borderThickness][drawingX+borderThickness], drawingX, drawingY), (drawingX * tileSize, drawingY * tileSize, tileSize, tileSize))
             # Boarder
-            pygame.draw.rect(screen, "black", (drawingX * tileSize, drawingY * tileSize, tileSize, tileSize), tileSize // 10)
+            #pygame.draw.rect(screen, "black", (drawingX * tileSize, drawingY * tileSize, tileSize, tileSize), tileSize // 10)
     
-    time.sleep(0.01)
+    time.sleep(0)
 
     pygame.display.update()
