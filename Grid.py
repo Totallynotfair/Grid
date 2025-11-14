@@ -20,6 +20,7 @@ checkingY = 0
 drawingX = 0
 drawingY = 0
 borderThickness = 1
+chosenMat = "sand"
 emptyList = []
 twoDList = []
 sandColors = []
@@ -59,6 +60,9 @@ def blockCheck(Y, X):
         elif twoDList[Y+1][X+1] == "blank" and twoDList[Y][X+1] == "blank":
            twoDList[Y+1][X+1] = twoDList[Y][X]
            twoDList[Y][X] = "blank"
+        elif twoDList[Y+1][X] == "water":
+           twoDList[Y+1][X] = twoDList[Y][X]
+           twoDList[Y][X] = "blank"
     elif twoDList[Y][X] == "rock":
         if twoDList[Y+1][X] == "blank":
            twoDList[Y+1][X] = twoDList[Y][X]
@@ -96,10 +100,6 @@ for i2 in range(tilesY + (borderThickness * 2)):
         rowList.append((random.randint(205,215),random.randint(175,185),random.randint(135,145)))
     sandColors.append(rowList)
 
-pygame.draw.rect(screen, color("sand", drawingX, drawingY), (drawingX * tileSize, drawingY * tileSize, tileSize, tileSize))
-
-
-
 while True:
     events = pygame.event.get()
     for event in events:
@@ -114,10 +114,23 @@ while True:
 
     if event.type == pygame.MOUSEMOTION:
         x, y = pygame.mouse.get_pos()
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_s]:
+        chosenMat = "sand"
+    elif keys[pygame.K_w]:
+        chosenMat = "water"
+    elif keys[pygame.K_r]:
+        chosenMat = "rock"
+    elif keys[pygame.K_m]:
+        chosenMat = "metal"
+    elif keys[pygame.K_b]:
+        chosenMat = "blank"
+
     if mouseDown:
         if x > 0 and x < screenX and y > 0 and y < screenY:
             twoDList[math.floor(y/tileSize)+1].pop(math.floor(x/tileSize)+1)
-            twoDList[math.floor(y/tileSize)+1].insert(math.floor(x/tileSize)+1, "sand")   
+            twoDList[math.floor(y/tileSize)+1].insert(math.floor(x/tileSize)+1, chosenMat)   
 
     buttons = pygame.mouse.get_pressed()
     if not any(buttons):
@@ -133,6 +146,6 @@ while True:
             # Boarder
             #pygame.draw.rect(screen, "black", (drawingX * tileSize, drawingY * tileSize, tileSize, tileSize), tileSize // 10)
     
-    time.sleep(0)
+    time.sleep(0.025)
 
     pygame.display.update()
