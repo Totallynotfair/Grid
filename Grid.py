@@ -6,14 +6,14 @@ import time
 
 pygame.display.init()
 
-tileSize = 20
-tilesX = 30
-tilesY = 30
+tileSize = 10
+tilesX = 50
+tilesY = 50
 x = 0
 y = 0
 screenX = tileSize * tilesX
 screenY = tileSize * tilesY
-screen = pygame.display.set_mode((screenX, screenY + 50))
+screen = pygame.display.set_mode((screenX, screenY))
 mouseDown = False
 checkingX = 0
 checkingY = 0
