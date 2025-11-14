@@ -6,9 +6,9 @@ import time
 
 pygame.display.init()
 
-tileSize = 10
-tilesX = 50
-tilesY = 50
+tileSize = 20
+tilesX = 30
+tilesY = 30
 x = 0
 y = 0
 screenX = tileSize * tilesX
@@ -20,7 +20,7 @@ checkingY = 0
 drawingX = 0
 drawingY = 0
 borderThickness = 1
-chosenMat = "sand"
+paintType = "sand"
 emptyList = []
 twoDList = []
 sandColors = []
@@ -31,13 +31,14 @@ def color(colorType, X, Y):
         "blank": 'white',
         "metal": 'black',
         "rock": 'darkgrey',
-        "water": 'blue'
+        "water": 'blue',
+        "lava": 'red'
     }
     # I used chatgpt to help me, turns out I was returning the entire dictionary
     return colors.get(colorType, 'red')
 
 def getAMat():
-    material = random.randint(1,5)
+    material = random.randint(1,6)
     if material == 1:
         return "sand"
     elif material == 2:
@@ -46,6 +47,8 @@ def getAMat():
         return "metal"
     elif material == 4:
         return "rock"
+    elif material == 5:
+        return "lava"
     else:
         return "blank"
 
@@ -78,6 +81,22 @@ def blockCheck(Y, X):
             twoDList[Y+1][X+1] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
             # Asked chatgpt to help with this, because I forgot that if I pop a unit in a list, the rest of the list moves down.
+        elif twoDList[Y][X-1] == "blank":
+            twoDList[Y][X-1] = twoDList[Y][X]
+            twoDList[Y][X] = "blank"
+        elif twoDList[Y][X+1] == "blank":
+            twoDList[Y][X+1] = twoDList[Y][X]
+            twoDList[Y][X] = "blank"
+    elif twoDList[Y][X] == "lava":
+        if twoDList[Y+1][X] == "blank":
+            twoDList[Y+1][X] = twoDList[Y][X]
+            twoDList[Y][X] = "blank"
+        elif twoDList[Y+1][X-1] == "blank" and twoDList[Y][X-1] == "blank":
+            twoDList[Y+1][X-1] = twoDList[Y][X]
+            twoDList[Y][X] = "blank"
+        elif twoDList[Y+1][X+1] == "blank" and twoDList[Y][X+1] == "blank":
+            twoDList[Y+1][X+1] = twoDList[Y][X]
+            twoDList[Y][X] = "blank"
         elif twoDList[Y][X-1] == "blank":
             twoDList[Y][X-1] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
@@ -117,22 +136,25 @@ while True:
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_s]:
-        chosenMat = "sand"
+        paintType = "sand"
     elif keys[pygame.K_w]:
-        chosenMat = "water"
+        paintType = "water"
     elif keys[pygame.K_r]:
-        chosenMat = "rock"
+        paintType = "rock"
     elif keys[pygame.K_m]:
-        chosenMat = "metal"
+        paintType = "metal"
     elif keys[pygame.K_b]:
-        chosenMat = "blank"
+        paintType = "blank"
+    elif keys[pygame.K_l]:
+        paintType = "lava"
 
     if mouseDown:
         if x > 0 and x < screenX and y > 0 and y < screenY:
             twoDList[math.floor(y/tileSize)+1].pop(math.floor(x/tileSize)+1)
-            twoDList[math.floor(y/tileSize)+1].insert(math.floor(x/tileSize)+1, chosenMat)   
+            twoDList[math.floor(y/tileSize)+1].insert(math.floor(x/tileSize)+1, paintType)
 
     buttons = pygame.mouse.get_pressed()
+
     if not any(buttons):
         mouseDown = False
     else:
