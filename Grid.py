@@ -13,7 +13,7 @@ x = 0
 y = 0
 screenX = tileSize * tilesX
 screenY = tileSize * tilesY
-screen = pygame.display.set_mode((screenX, screenY + 50))
+screen = pygame.display.set_mode((screenX, screenY))
 mouseDown = False
 checkingX = 0
 checkingY = 0
@@ -126,10 +126,6 @@ for i2 in range(tilesY + (borderThickness * 2)):
     for i in range(tilesX + (borderThickness * 2)):
         rowList.append((random.randint(205,215),random.randint(175,185),random.randint(135,145)))
     sandColors.append(rowList)
-
-pygame.draw.rect(screen, color("sand", drawingX, drawingY), (drawingX * tileSize, drawingY * tileSize, tileSize, tileSize))
-
-
 
 while True:
     events = pygame.event.get()
