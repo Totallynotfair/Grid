@@ -6,9 +6,9 @@ import time
 
 pygame.display.init()
 
-tileSize = 10
-tilesX = 50
-tilesY = 50
+tileSize = 15
+tilesX = 60
+tilesY = 60
 x = 0
 y = 0
 screenX = tileSize * tilesX
@@ -54,6 +54,7 @@ def getAMat():
         return "blank"
 
 def blockCheck(Y, X):
+    # Asked chatgpt to help with this, because I forgot that if I pop a unit in a list, the rest of the list moves down.
     if twoDList[Y][X] == "sand":
         if twoDList[Y+1][X] == "blank":
             twoDList[Y+1][X] = twoDList[Y][X]
@@ -68,8 +69,8 @@ def blockCheck(Y, X):
            twoDList[Y+1][X+1] = twoDList[Y][X]
            twoDList[Y][X] = "blank"
         elif twoDList[Y+1][X] == "water":
-           twoDList[Y+1][X] = twoDList[Y][X]
-           twoDList[Y][X] = "blank"
+            twoDList[Y+1][X] = twoDList[Y][X]
+            twoDList[Y][X] = "water"
     elif twoDList[Y][X] == "rock":
         if twoDList[Y+1][X] == "blank":
            twoDList[Y+1][X] = twoDList[Y][X]
@@ -95,7 +96,6 @@ def blockCheck(Y, X):
         elif twoDList[Y+1][X+1] == "blank" and twoDList[Y][X+1] == "blank":
             twoDList[Y+1][X+1] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
-            # Asked chatgpt to help with this, because I forgot that if I pop a unit in a list, the rest of the list moves down.
         elif twoDList[Y][X-1] == "blank":
             twoDList[Y][X-1] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
@@ -205,6 +205,6 @@ while True:
             # Boarder
             #pygame.draw.rect(screen, "black", (drawingX * tileSize, drawingY * tileSize, tileSize, tileSize), tileSize // 10)
     
-    time.sleep(0.025)
+    #time.sleep(0.025)
 
     pygame.display.update()
