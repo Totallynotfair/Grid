@@ -63,7 +63,7 @@ def blockCheck(Y, X):
         if twoDList[Y+1][X] == "blank":
             twoDList[Y+1][X] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
-        if twoDList[Y+1][X] == "steam":
+        elif twoDList[Y+1][X] == "steam":
             twoDList[Y+1][X] = twoDList[Y][X]
             twoDList[Y][X] = "steam"
         elif twoDList[Y+1][X-1] == "blank" and twoDList[Y][X-1] == "blank":
@@ -163,12 +163,21 @@ def blockCheck(Y, X):
         if twoDList[Y+1][X] == "blank":
            twoDList[Y+1][X] = twoDList[Y][X]
            twoDList[Y][X] = "blank"
-        if twoDList[Y+1][X] == "lava":
+        elif twoDList[Y+1][X] == "steam":
+            twoDList[Y+1][X] = twoDList[Y][X]
+            twoDList[Y][X] = "steam"
+        elif twoDList[Y+1][X] == "blank":
+           twoDList[Y+1][X] = twoDList[Y][X]
+           twoDList[Y][X] = "blank"
+        elif twoDList[Y+1][X] == "lava":
            twoDList[Y][X] = "coal"
     elif twoDList[Y][X] == "coal":
         if twoDList[Y+1][X] == "blank":
             twoDList[Y+1][X] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
+        elif twoDList[Y+1][X] == "steam":
+            twoDList[Y+1][X] = twoDList[Y][X]
+            twoDList[Y][X] = "steam"
         elif twoDList[Y+1][X-1] == "blank" and twoDList[Y][X-1] == "blank":
            twoDList[Y+1][X-1] = twoDList[Y][X]
            twoDList[Y][X] = "blank"
@@ -179,6 +188,9 @@ def blockCheck(Y, X):
         if twoDList[Y+1][X] == "blank":
             twoDList[Y+1][X] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
+        elif twoDList[Y+1][X] == "steam":
+            twoDList[Y+1][X] = twoDList[Y][X]
+            twoDList[Y][X] = "steam"
         elif twoDList[Y+1][X-1] == "blank" and twoDList[Y][X-1] == "blank":
             twoDList[Y+1][X-1] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
@@ -260,6 +272,6 @@ while True:
             # Boarder
             #pygame.draw.rect(screen, "black", (drawingX * tileSize, drawingY * tileSize, tileSize, tileSize), tileSize // 10)
     
-    time.sleep(0.05)
+    #time.sleep(0.05)
 
     pygame.display.update()
