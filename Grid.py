@@ -30,9 +30,13 @@ def color(colorType, X, Y):
         "sand": sandColors[Y][X],
         "blank": 'white',
         "metal": 'black',
-        "rock": 'darkgrey',
+        "rock": 'lightgray',
         "water": 'blue',
-        "lava": 'red'
+        "lava": 'red',
+        "tree": 'darkgreen',
+        "coal": 'darkgray',
+        "oil": 'darkred',
+        "fire": 'orange'
     }
     # I used chatgpt to help me, turns out I was returning the entire dictionary
     return colors.get(colorType, 'red')
@@ -80,6 +84,21 @@ def blockCheck(Y, X):
             twoDList[Y][X] = "blank"
         elif twoDList[Y+1][X] == "lava":
             twoDList[Y][X] = "blank"
+        elif twoDList[Y+1][X] == "oil":
+            twoDList[Y+1][X] = twoDList[Y][X]
+            twoDList[Y][X] = "oil"
+        elif twoDList[Y+1][X-1] == "oil" and twoDList[Y][X-1]:
+            twoDList[Y+1][X-1] = twoDList[Y][X]
+            twoDList[Y][X] = "oil"
+        elif twoDList[Y+1][X+1] == "oil" and twoDList[Y][X+1]:
+            twoDList[Y+1][X+1] = twoDList[Y][X]
+            twoDList[Y][X] = "oil"
+        elif twoDList[Y][X-1] == "oil":
+            twoDList[Y][X-1] = twoDList[Y][X]
+            twoDList[Y][X] = "oil"
+        elif twoDList[Y][X+1] == "oil":
+            twoDList[Y][X+1] = twoDList[Y][X]
+            twoDList[Y][X] = "oil"
         elif twoDList[Y+1][X-1] == "blank" and twoDList[Y][X-1] == "blank":
             twoDList[Y+1][X-1] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
@@ -97,8 +116,39 @@ def blockCheck(Y, X):
             twoDList[Y+1][X] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
         elif twoDList[Y+1][X] == "water":
-            twoDList[Y+1][X] = "blank"
             twoDList[Y][X] = "rock"
+        elif twoDList[Y+1][X-1] == "blank" and twoDList[Y][X-1] == "blank":
+            twoDList[Y+1][X-1] = twoDList[Y][X]
+            twoDList[Y][X] = "blank"
+        elif twoDList[Y+1][X+1] == "blank" and twoDList[Y][X+1] == "blank":
+            twoDList[Y+1][X+1] = twoDList[Y][X]
+            twoDList[Y][X] = "blank"
+        elif twoDList[Y][X-1] == "blank":
+            twoDList[Y][X-1] = twoDList[Y][X]
+            twoDList[Y][X] = "blank"
+        elif twoDList[Y][X+1] == "blank":
+            twoDList[Y][X+1] = twoDList[Y][X]
+            twoDList[Y][X] = "blank"
+    elif twoDList[Y][X] == "tree":
+        if twoDList[Y+1][X] == "blank":
+           twoDList[Y+1][X] = twoDList[Y][X]
+           twoDList[Y][X] = "blank"
+        if twoDList[Y+1][X] == "lava":
+           twoDList[Y][X] = "coal"
+    elif twoDList[Y][X] == "coal":
+        if twoDList[Y+1][X] == "blank":
+            twoDList[Y+1][X] = twoDList[Y][X]
+            twoDList[Y][X] = "blank"
+        elif twoDList[Y+1][X-1] == "blank" and twoDList[Y][X-1] == "blank":
+           twoDList[Y+1][X-1] = twoDList[Y][X]
+           twoDList[Y][X] = "blank"
+        elif twoDList[Y+1][X+1] == "blank" and twoDList[Y][X+1] == "blank":
+           twoDList[Y+1][X+1] = twoDList[Y][X]
+           twoDList[Y][X] = "blank"
+    elif twoDList[Y][X] == "oil":
+        if twoDList[Y+1][X] == "blank":
+            twoDList[Y+1][X] = twoDList[Y][X]
+            twoDList[Y][X] = "blank"
         elif twoDList[Y+1][X-1] == "blank" and twoDList[Y][X-1] == "blank":
             twoDList[Y+1][X-1] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
@@ -155,6 +205,10 @@ while True:
         paintType = "blank"
     elif keys[pygame.K_l]:
         paintType = "lava"
+    elif keys[pygame.K_t]:
+        paintType = "tree"
+    elif keys[pygame.K_o]:
+        paintType = "oil"
 
     if mouseDown:
         if x > 0 and x < screenX and y > 0 and y < screenY:
@@ -176,6 +230,6 @@ while True:
             # Boarder
             #pygame.draw.rect(screen, "black", (drawingX * tileSize, drawingY * tileSize, tileSize, tileSize), tileSize // 10)
     
-    #time.sleep(0.025)
+    time.sleep(0.05)
 
     pygame.display.update()
