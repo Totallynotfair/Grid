@@ -28,11 +28,12 @@ sandColors = []
 def color(colorType, X, Y):
     colors = {
         "sand": sandColors[Y][X],
-        "blank": 'white',
+        "blank": 'lightblue',
         "metal": 'black',
         "rock": 'lightgray',
         "water": 'blue',
         "lava": 'red',
+        "steam": 'white',
         "tree": 'darkgreen',
         "coal": 'darkgray',
         "oil": 'darkred',
@@ -62,6 +63,9 @@ def blockCheck(Y, X):
         if twoDList[Y+1][X] == "blank":
             twoDList[Y+1][X] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
+        if twoDList[Y+1][X] == "steam":
+            twoDList[Y+1][X] = twoDList[Y][X]
+            twoDList[Y][X] = "steam"
         elif twoDList[Y+1][X-1] == "blank" and twoDList[Y][X-1] == "blank":
            twoDList[Y+1][X-1] = twoDList[Y][X]
            twoDList[Y][X] = "blank"
@@ -76,14 +80,20 @@ def blockCheck(Y, X):
            twoDList[Y+1][X] = twoDList[Y][X]
            twoDList[Y][X] = "blank"
         elif twoDList[Y+1][X] == "water":
-           twoDList[Y+1][X] = twoDList[Y][X]
-           twoDList[Y][X] = "water"
+            twoDList[Y+1][X] = twoDList[Y][X]
+            twoDList[Y][X] = "water"
+        elif twoDList[Y+1][X] == "steam":
+            twoDList[Y+1][X] = twoDList[Y][X]
+            twoDList[Y][X] = "steam"
     elif twoDList[Y][X] == "water":
         if twoDList[Y+1][X] == "blank":
             twoDList[Y+1][X] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
         elif twoDList[Y+1][X] == "lava":
-            twoDList[Y][X] = "blank"
+            twoDList[Y][X] = "steam"
+        elif twoDList[Y+1][X] == "steam":
+            twoDList[Y+1][X] = twoDList[Y][X]
+            twoDList[Y][X] = "steam"
         elif twoDList[Y+1][X] == "oil":
             twoDList[Y+1][X] = twoDList[Y][X]
             twoDList[Y][X] = "oil"
@@ -116,12 +126,32 @@ def blockCheck(Y, X):
             twoDList[Y+1][X] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
         elif twoDList[Y+1][X] == "water":
-            twoDList[Y][X] = "rock"
+            twoDList[Y+1][X] = "rock"
+            twoDList[Y][X] = "blank"
+        elif twoDList[Y+1][X] == "steam":
+            twoDList[Y+1][X] = twoDList[Y][X]
+            twoDList[Y][X] = "steam"
         elif twoDList[Y+1][X-1] == "blank" and twoDList[Y][X-1] == "blank":
             twoDList[Y+1][X-1] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
         elif twoDList[Y+1][X+1] == "blank" and twoDList[Y][X+1] == "blank":
             twoDList[Y+1][X+1] = twoDList[Y][X]
+            twoDList[Y][X] = "blank"
+        elif twoDList[Y][X-1] == "blank":
+            twoDList[Y][X-1] = twoDList[Y][X]
+            twoDList[Y][X] = "blank"
+        elif twoDList[Y][X+1] == "blank":
+            twoDList[Y][X+1] = twoDList[Y][X]
+            twoDList[Y][X] = "blank"
+    if twoDList[Y][X] == "steam":
+        if twoDList[Y-1][X] == "blank":
+            twoDList[Y-1][X] = twoDList[Y][X]
+            twoDList[Y][X] = "blank"
+        elif twoDList[Y-1][X-1] == "blank":
+            twoDList[Y-1][X-1] = twoDList[Y][X]
+            twoDList[Y][X] = "blank"
+        elif twoDList[Y-1][X+1] == "blank":
+            twoDList[Y-1][X+1] = twoDList[Y][X]
             twoDList[Y][X] = "blank"
         elif twoDList[Y][X-1] == "blank":
             twoDList[Y][X-1] = twoDList[Y][X]
