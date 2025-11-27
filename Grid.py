@@ -59,160 +59,160 @@ def getAMat():
 
 def blockCheck(Y, X):
     # Asked chatgpt to help with this, because I forgot that if I pop a unit in a list, the rest of the list moves down.
-    if twoDList[Y][X] == "sand":
-        if twoDList[Y+1][X] == "blank":
-            twoDList[Y+1][X] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
-        elif twoDList[Y+1][X] == "steam":
-            twoDList[Y+1][X] = twoDList[Y][X]
-            twoDList[Y][X] = "steam"
-        elif twoDList[Y+1][X-1] == "blank" and twoDList[Y][X-1] == "blank":
-           twoDList[Y+1][X-1] = twoDList[Y][X]
-           twoDList[Y][X] = "blank"
-        elif twoDList[Y+1][X+1] == "blank" and twoDList[Y][X+1] == "blank":
-           twoDList[Y+1][X+1] = twoDList[Y][X]
-           twoDList[Y][X] = "blank"
-        elif twoDList[Y+1][X] == "water":
-            twoDList[Y+1][X] = twoDList[Y][X]
-            twoDList[Y][X] = "water"
-    elif twoDList[Y][X] == "rock":
-        if twoDList[Y+1][X] == "blank":
-           twoDList[Y+1][X] = twoDList[Y][X]
-           twoDList[Y][X] = "blank"
-        elif twoDList[Y+1][X] == "water":
-            twoDList[Y+1][X] = twoDList[Y][X]
-            twoDList[Y][X] = "water"
-        elif twoDList[Y+1][X] == "steam":
-            twoDList[Y+1][X] = twoDList[Y][X]
-            twoDList[Y][X] = "steam"
-    elif twoDList[Y][X] == "water":
-        if twoDList[Y+1][X] == "blank":
-            twoDList[Y+1][X] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
-        elif twoDList[Y+1][X] == "lava":
-            twoDList[Y][X] = "steam"
-        elif twoDList[Y+1][X] == "steam":
-            twoDList[Y+1][X] = twoDList[Y][X]
-            twoDList[Y][X] = "steam"
-        elif twoDList[Y+1][X] == "oil":
-            twoDList[Y+1][X] = twoDList[Y][X]
-            twoDList[Y][X] = "oil"
-        elif twoDList[Y+1][X-1] == "oil" and twoDList[Y][X-1]:
-            twoDList[Y+1][X-1] = twoDList[Y][X]
-            twoDList[Y][X] = "oil"
-        elif twoDList[Y+1][X+1] == "oil" and twoDList[Y][X+1]:
-            twoDList[Y+1][X+1] = twoDList[Y][X]
-            twoDList[Y][X] = "oil"
-        elif twoDList[Y][X-1] == "oil":
-            twoDList[Y][X-1] = twoDList[Y][X]
-            twoDList[Y][X] = "oil"
-        elif twoDList[Y][X+1] == "oil":
-            twoDList[Y][X+1] = twoDList[Y][X]
-            twoDList[Y][X] = "oil"
-        elif twoDList[Y+1][X-1] == "blank" and twoDList[Y][X-1] == "blank":
-            twoDList[Y+1][X-1] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
-        elif twoDList[Y+1][X+1] == "blank" and twoDList[Y][X+1] == "blank":
-            twoDList[Y+1][X+1] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
-        elif twoDList[Y][X-1] == "blank":
-            twoDList[Y][X-1] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
-        elif twoDList[Y][X+1] == "blank":
-            twoDList[Y][X+1] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
-    elif twoDList[Y][X] == "lava":
-        if twoDList[Y+1][X] == "blank":
-            twoDList[Y+1][X] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
-        elif twoDList[Y+1][X] == "water":
-            twoDList[Y+1][X] = "rock"
-            twoDList[Y][X] = "blank"
-        elif twoDList[Y+1][X] == "steam":
-            twoDList[Y+1][X] = twoDList[Y][X]
-            twoDList[Y][X] = "steam"
-        elif twoDList[Y+1][X-1] == "blank" and twoDList[Y][X-1] == "blank":
-            twoDList[Y+1][X-1] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
-        elif twoDList[Y+1][X+1] == "blank" and twoDList[Y][X+1] == "blank":
-            twoDList[Y+1][X+1] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
-        elif twoDList[Y][X-1] == "blank":
-            twoDList[Y][X-1] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
-        elif twoDList[Y][X+1] == "blank":
-            twoDList[Y][X+1] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
-    if twoDList[Y][X] == "steam":
-        if twoDList[Y-1][X] == "blank":
-            twoDList[Y-1][X] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
-        elif twoDList[Y-1][X-1] == "blank":
-            twoDList[Y-1][X-1] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
-        elif twoDList[Y-1][X+1] == "blank":
-            twoDList[Y-1][X+1] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
-        elif twoDList[Y][X-1] == "blank":
-            twoDList[Y][X-1] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
-        elif twoDList[Y][X+1] == "blank":
-            twoDList[Y][X+1] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
-    elif twoDList[Y][X] == "tree":
-        if twoDList[Y+1][X] == "blank":
-           twoDList[Y+1][X] = twoDList[Y][X]
-           twoDList[Y][X] = "blank"
-        elif twoDList[Y+1][X] == "steam":
-            twoDList[Y+1][X] = twoDList[Y][X]
-            twoDList[Y][X] = "steam"
-        elif twoDList[Y+1][X] == "blank":
-           twoDList[Y+1][X] = twoDList[Y][X]
-           twoDList[Y][X] = "blank"
-        elif twoDList[Y+1][X] == "lava":
-           twoDList[Y][X] = "coal"
-    elif twoDList[Y][X] == "coal":
-        if twoDList[Y+1][X] == "blank":
-            twoDList[Y+1][X] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
-        elif twoDList[Y+1][X] == "steam":
-            twoDList[Y+1][X] = twoDList[Y][X]
-            twoDList[Y][X] = "steam"
-        elif twoDList[Y+1][X-1] == "blank" and twoDList[Y][X-1] == "blank":
-           twoDList[Y+1][X-1] = twoDList[Y][X]
-           twoDList[Y][X] = "blank"
-        elif twoDList[Y+1][X+1] == "blank" and twoDList[Y][X+1] == "blank":
-           twoDList[Y+1][X+1] = twoDList[Y][X]
-           twoDList[Y][X] = "blank"
-    elif twoDList[Y][X] == "oil":
-        if twoDList[Y+1][X] == "blank":
-            twoDList[Y+1][X] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
-        elif twoDList[Y+1][X] == "steam":
-            twoDList[Y+1][X] = twoDList[Y][X]
-            twoDList[Y][X] = "steam"
-        elif twoDList[Y+1][X-1] == "blank" and twoDList[Y][X-1] == "blank":
-            twoDList[Y+1][X-1] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
-        elif twoDList[Y+1][X+1] == "blank" and twoDList[Y][X+1] == "blank":
-            twoDList[Y+1][X+1] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
-        elif twoDList[Y][X-1] == "blank":
-            twoDList[Y][X-1] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
-        elif twoDList[Y][X+1] == "blank":
-            twoDList[Y][X+1] = twoDList[Y][X]
-            twoDList[Y][X] = "blank"
+    if twoDList[Y][X][0] == "sand":
+        if twoDList[Y+1][X][0] == "blank":
+            twoDList[Y+1][X][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "blank"
+        elif twoDList[Y+1][X][0] == "steam":
+            twoDList[Y+1][X][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "steam"
+        elif twoDList[Y+1][X-1][0] == "blank" and twoDList[Y][X-1][0] == "blank":
+           twoDList[Y+1][X-1][0] = twoDList[Y][X][0]
+           twoDList[Y][X][0] = "blank"
+        elif twoDList[Y+1][X+1][0] == "blank" and twoDList[Y][X+1][0] == "blank":
+           twoDList[Y+1][X+1][0] = twoDList[Y][X][0]
+           twoDList[Y][X][0] = "blank"
+        elif twoDList[Y+1][X][0] == "water":
+            twoDList[Y+1][X][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "water"
+    elif twoDList[Y][X][0] == "rock":
+        if twoDList[Y+1][X][0] == "blank":
+           twoDList[Y+1][X][0] = twoDList[Y][X][0]
+           twoDList[Y][X][0] = "blank"
+        elif twoDList[Y+1][X][0] == "water":
+            twoDList[Y+1][X][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "water"
+        elif twoDList[Y+1][X][0] == "steam":
+            twoDList[Y+1][X][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "steam" 
+    elif twoDList[Y][X][0] == "water":
+        if twoDList[Y+1][X][0] == "blank":
+            twoDList[Y+1][X][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "blank"
+        elif twoDList[Y+1][X][0] == "lava":
+            twoDList[Y][X][0] = "steam"
+        elif twoDList[Y+1][X][0] == "steam":
+            twoDList[Y+1][X][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "steam"
+        elif twoDList[Y+1][X][0] == "oil":
+            twoDList[Y+1][X][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "oil"
+        elif twoDList[Y+1][X-1][0] == "oil" and twoDList[Y][X-1][0]:
+            twoDList[Y+1][X-1][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "oil"
+        elif twoDList[Y+1][X+1][0] == "oil" and twoDList[Y][X+1][0]:
+            twoDList[Y+1][X+1][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "oil"
+        elif twoDList[Y][X-1][0] == "oil":
+            twoDList[Y][X-1][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "oil"
+        elif twoDList[Y][X+1][0] == "oil":
+            twoDList[Y][X+1][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "oil"
+        elif twoDList[Y+1][X-1][0] == "blank" and twoDList[Y][X-1][0] == "blank":
+            twoDList[Y+1][X-1][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "blank"
+        elif twoDList[Y+1][X+1][0] == "blank" and twoDList[Y][X+1][0] == "blank":
+            twoDList[Y+1][X+1][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "blank"
+        elif twoDList[Y][X-1][0] == "blank":
+            twoDList[Y][X-1][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "blank"
+        elif twoDList[Y][X+1][0] == "blank":
+            twoDList[Y][X+1][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "blank"
+    elif twoDList[Y][X][0] == "lava":
+        if twoDList[Y+1][X][0] == "blank":
+            twoDList[Y+1][X][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "blank"
+        elif twoDList[Y+1][X][0] == "water":
+            twoDList[Y+1][X][0] = "rock"
+            twoDList[Y][X][0] = "blank"
+        elif twoDList[Y+1][X][0] == "steam":
+            twoDList[Y+1][X][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "steam"
+        elif twoDList[Y+1][X-1][0] == "blank" and twoDList[Y][X-1][0] == "blank":
+            twoDList[Y+1][X-1][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "blank"
+        elif twoDList[Y+1][X+1][0] == "blank" and twoDList[Y][X+1][0] == "blank":
+            twoDList[Y+1][X+1][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "blank"
+        elif twoDList[Y][X-1][0] == "blank":
+            twoDList[Y][X-1][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "blank"
+        elif twoDList[Y][X+1][0] == "blank":
+            twoDList[Y][X+1][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "blank"
+    if twoDList[Y][X][0] == "steam":
+        if twoDList[Y-1][X][0] == "blank":
+            twoDList[Y-1][X][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "blank"
+        elif twoDList[Y-1][X-1][0] == "blank":
+            twoDList[Y-1][X-1][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "blank"
+        elif twoDList[Y-1][X+1][0] == "blank":
+            twoDList[Y-1][X+1][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "blank"
+        elif twoDList[Y][X-1][0] == "blank":
+            twoDList[Y][X-1][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "blank"
+        elif twoDList[Y][X+1][0] == "blank":
+            twoDList[Y][X+1][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "blank"
+    elif twoDList[Y][X][0] == "tree":
+        if twoDList[Y+1][X][0] == "blank":
+           twoDList[Y+1][X][0] = twoDList[Y][X][0]
+           twoDList[Y][X][0] = "blank"
+        elif twoDList[Y+1][X][0] == "steam":
+            twoDList[Y+1][X][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "steam"
+        elif twoDList[Y+1][X][0] == "blank":
+           twoDList[Y+1][X][0] = twoDList[Y][X][0]
+           twoDList[Y][X][0] = "blank"
+        elif twoDList[Y+1][X][0] == "lava":
+           twoDList[Y][X][0] = "coal"
+    elif twoDList[Y][X][0] == "coal":
+        if twoDList[Y+1][X][0] == "blank":
+            twoDList[Y+1][X][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "blank"
+        elif twoDList[Y+1][X][0] == "steam":
+            twoDList[Y+1][X][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "steam"
+        elif twoDList[Y+1][X-1][0] == "blank" and twoDList[Y][X-1][0] == "blank":
+           twoDList[Y+1][X-1][0] = twoDList[Y][X][0]
+           twoDList[Y][X][0] = "blank"
+        elif twoDList[Y+1][X+1][0] == "blank" and twoDList[Y][X+1][0] == "blank":
+           twoDList[Y+1][X+1][0] = twoDList[Y][X][0]
+           twoDList[Y][X][0] = "blank"
+    elif twoDList[Y][X][0] == "oil":
+        if twoDList[Y+1][X][0] == "blank":
+            twoDList[Y+1][X][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "blank"
+        elif twoDList[Y+1][X][0] == "steam":
+            twoDList[Y+1][X][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "steam"
+        elif twoDList[Y+1][X-1][0] == "blank" and twoDList[Y][X-1][0] == "blank":
+            twoDList[Y+1][X-1][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "blank"
+        elif twoDList[Y+1][X+1][0] == "blank" and twoDList[Y][X+1][0] == "blank":
+            twoDList[Y+1][X+1][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "blank"
+        elif twoDList[Y][X-1][0] == "blank":
+            twoDList[Y][X-1][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "blank"
+        elif twoDList[Y][X+1][0] == "blank":
+            twoDList[Y][X+1][0] = twoDList[Y][X][0]
+            twoDList[Y][X][0] = "blank"
 
 for i2 in range(tilesY + (borderThickness * 2)):
     rowList = []
     for i in range(tilesX + (borderThickness * 2)):
         if i2 == 0 or i2 == tilesY + (borderThickness):
-            rowList.append("metal")
+            rowList.append(["metal"])
         elif i == 0 or i == tilesX + (borderThickness):
-            rowList.append("metal")
+            rowList.append(["metal"])
         else:
-            rowList.append("blank")
+            rowList.append(["blank"])
     twoDList.append(rowList)
     rowList = []
     for i in range(tilesX + (borderThickness * 2)):
@@ -254,8 +254,8 @@ while True:
 
     if mouseDown:
         if x > 0 and x < screenX and y > 0 and y < screenY:
-            twoDList[math.floor(y/tileSize)+1].pop(math.floor(x/tileSize)+1)
-            twoDList[math.floor(y/tileSize)+1].insert(math.floor(x/tileSize)+1, paintType)
+            twoDList[math.floor(y/tileSize)+1][math.floor(x/tileSize)+1].pop(0)
+            twoDList[math.floor(y/tileSize)+1][math.floor(x/tileSize)+1].insert(0, paintType)
 
     buttons = pygame.mouse.get_pressed()
 
@@ -268,7 +268,7 @@ while True:
     for drawingY in range(0, screenY // tileSize):
         for drawingX in range(0, screenX // tileSize):
             # Inner
-            pygame.draw.rect(screen, color(twoDList[drawingY+borderThickness][drawingX+borderThickness], drawingX, drawingY), (drawingX * tileSize, drawingY * tileSize, tileSize, tileSize))
+            pygame.draw.rect(screen, color(twoDList[drawingY+borderThickness][drawingX+borderThickness][0], drawingX, drawingY), (drawingX * tileSize, drawingY * tileSize, tileSize, tileSize))
             # Boarder
             #pygame.draw.rect(screen, "black", (drawingX * tileSize, drawingY * tileSize, tileSize, tileSize), tileSize // 10)
     
