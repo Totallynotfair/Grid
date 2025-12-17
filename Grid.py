@@ -56,122 +56,89 @@ def getAMat():
         return "lava"
     else:
         return "blank"
-def swapPos(x1, x2, y1, y2):
+    
+def swapPos(X1, Y1, X2, Y2):
+    item = twoDList[Y2][X2][0]
+    twoDList[Y2][X2][0] = twoDList[Y1][X1][0]
+    twoDList[Y1][X1][0] = item
+
 def blockCheck(Y, X):
     # Asked chatgpt to help with this, because I forgot that if I pop a unit in a list, the rest of the list moves down.
-            # -----SAND-----
+
+            # -----SAND----- #
+
     if twoDList[Y][X][0] == "sand" and twoDList[Y][X][1] == 0:
         if twoDList[Y+1][X][0] == "blank":
-            twoDList[Y+1][X][0] = twoDList[Y][X][0]
-            twoDList[Y][X][0] = "blank"
-
+            swapPos(X, Y, X, Y+1)
         elif twoDList[Y+1][X][0] == "steam":
-            twoDList[Y+1][X][0] = twoDList[Y][X][0]
-            twoDList[Y][X][0] = "steam"
-
+            swapPos(X, Y, X, Y+1)
         elif twoDList[Y+1][X-1][0] == "blank" and twoDList[Y][X-1][0] == "blank":
-           twoDList[Y+1][X-1][0] = twoDList[Y][X][0]
-           twoDList[Y][X][0] = "blank"
-
+            swapPos(X, Y, X-1, Y+1)
         elif twoDList[Y+1][X+1][0] == "blank" and twoDList[Y][X+1][0] == "blank":
-           twoDList[Y+1][X+1][0] = twoDList[Y][X][0]
-           twoDList[Y][X][0] = "blank"
-
+            swapPos(X, Y, X+2, Y+1)
         elif twoDList[Y+1][X][0] == "water":  
-            twoDList[Y+1][X][0] = twoDList[Y][X][0]
-            twoDList[Y][X][0] = "water"
-            # -----ROCK-----
+            swapPos(X, Y, X, Y+1)
+
+            # -----ROCK----- #
+
     elif twoDList[Y][X][0] == "rock" and twoDList[Y][X][1] == 0:
         if twoDList[Y+1][X][0] == "blank":
-           twoDList[Y+1][X][0] = twoDList[Y][X][0]
-           twoDList[Y][X][0] = "blank"
-
+            swapPos(X, Y, X, Y+1)
         elif twoDList[Y+1][X][0] == "water":
-            twoDList[Y+1][X][0] = twoDList[Y][X][0]
-            twoDList[Y][X][0] = "water"
-
+            swapPos(X, Y, X, Y+1)
         elif twoDList[Y+1][X][0] == "steam":
-            twoDList[Y+1][X][0] = twoDList[Y][X][0]
-            twoDList[Y][X][0] = "steam" 
-            # -----WATER-----
+            swapPos(X, Y, X, Y+1)
+
+            # -----WATER----- #
+
     elif twoDList[Y][X][0] == "water" and twoDList[Y][X][1] == 0:
         if twoDList[Y+1][X][0] == "blank":
-            twoDList[Y+1][X][0] = twoDList[Y][X][0]
-            twoDList[Y][X][0] = "blank"
-
+            swapPos(X, Y, X, Y+1)
         elif twoDList[Y+1][X][0] == "lava":
             twoDList[Y][X][0] = "steam"
-
         elif twoDList[Y+1][X][0] == "steam":
-            twoDList[Y+1][X][0] = twoDList[Y][X][0]
-            twoDList[Y][X][0] = "steam"
-
+            swapPos(X, Y, X, Y+1)
         elif twoDList[Y+1][X-1][0] == "blank" and twoDList[Y][X-1][0] == "blank":
-            twoDList[Y+1][X-1][0] = twoDList[Y][X][0]
-            twoDList[Y][X][0] = "blank"
-
+            swapPos(X, Y, X-1, Y+1)
         elif twoDList[Y+1][X+1][0] == "blank" and twoDList[Y][X+1][0] == "blank":
-            twoDList[Y+1][X+1][0] = twoDList[Y][X][0]
-            twoDList[Y][X][0] = "blank"
-
+            swapPos(X, Y, X+1, Y+1)
         elif twoDList[Y][X-1][0] == "blank":
-            twoDList[Y][X-1][0] = twoDList[Y][X][0]
-            twoDList[Y][X][0] = "blank"
-
+            swapPos(X, Y, X-1, Y)
         elif twoDList[Y][X+1][0] == "blank":
-            twoDList[Y][X+1][0] = twoDList[Y][X][0]
-            twoDList[Y][X][0] = "blank"
-            # -----LAVA-----
+            swapPos(X, Y, X+1, Y)
+
+            # -----LAVA----- #
+
     elif twoDList[Y][X][0] == "lava" and twoDList[Y][X][1] == 0:
         if twoDList[Y+1][X][0] == "blank":
-            twoDList[Y+1][X][0] = twoDList[Y][X][0]
-            twoDList[Y][X][0] = "blank"
-
+            swapPos(X, Y, X, Y+1)
         elif twoDList[Y+1][X][0] == "water":
             twoDList[Y+1][X][0] = "rock"
             twoDList[Y][X][0] = "blank"
-
         elif twoDList[Y+1][X][0] == "steam":
-            twoDList[Y+1][X][0] = twoDList[Y][X][0]
-            twoDList[Y][X][0] = "steam"
-
+            swapPos(X, Y, X, Y+1)
         elif twoDList[Y+1][X-1][0] == "blank" and twoDList[Y][X-1][0] == "blank":
-            twoDList[Y+1][X-1][0] = twoDList[Y][X][0]
-            twoDList[Y][X][0] = "blank"
-
+            swapPos(X, Y, X-1, Y+1)
         elif twoDList[Y+1][X+1][0] == "blank" and twoDList[Y][X+1][0] == "blank":
-            twoDList[Y+1][X+1][0] = twoDList[Y][X][0]
-            twoDList[Y][X][0] = "blank"
-
+            swapPos(X, Y, X+1, Y+1)
         elif twoDList[Y][X-1][0] == "blank":
-            twoDList[Y][X-1][0] = twoDList[Y][X][0]
-            twoDList[Y][X][0] = "blank"
-
+            swapPos(X, Y, X-1, Y)
         elif twoDList[Y][X+1][0] == "blank":
-            twoDList[Y][X+1][0] = twoDList[Y][X][0]
-            twoDList[Y][X][0] = "blank"
-            # -----STEAM-----
+            swapPos(X, Y, X+1, Y)
+
+            # -----STEAM----- #
+
     if twoDList[Y][X][0] == "steam" and twoDList[Y][X][1] == 0:
         if twoDList[Y-1][X][0] == "blank":
-            twoDList[Y-1][X][0] = twoDList[Y][X][0]
-            twoDList[Y][X][0] = "blank"
-
+            swapPos(X, Y, X, Y-1)
         elif twoDList[Y-1][X-1][0] == "blank":
-            twoDList[Y-1][X-1][0] = twoDList[Y][X][0]
-            twoDList[Y][X][0] = "blank"
-
+            swapPos(X, Y, X-1, Y-1)
         elif twoDList[Y-1][X+1][0] == "blank":
-            twoDList[Y-1][X+1][0] = twoDList[Y][X][0]
-            twoDList[Y][X][0] = "blank"
-
+            swapPos(X, Y, X+1, Y-1)
         elif twoDList[Y][X-1][0] == "blank":
-            twoDList[Y][X-1][0] = twoDList[Y][X][0]
-            twoDList[Y][X][0] = "blank"
-
+            swapPos(X, Y, X-1, Y)
         elif twoDList[Y][X+1][0] == "blank":
-            twoDList[Y][X+1][0] = twoDList[Y][X][0]
-            twoDList[Y][X][0] = "blank"
-
+            swapPos(X, Y, X+1, Y)
 
 for i2 in range(tilesY + (borderThickness * 2)):
     rowList = []
@@ -216,10 +183,6 @@ while True:
         paintType = "blank"
     elif keys[pygame.K_l]:
         paintType = "lava"
-    elif keys[pygame.K_t]:
-        paintType = "tree"
-    elif keys[pygame.K_o]:
-        paintType = "oil"
 
     if mouseDown:
         if x > 0 and x < screenX and y > 0 and y < screenY:
