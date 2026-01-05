@@ -5,6 +5,7 @@ import math
 import time
 
 pygame.display.init()
+pygame.font.init()
 
 tileSize = 15
 tilesX = 60
@@ -24,6 +25,10 @@ paintType = "sand"
 emptyList = []
 twoDList = []
 sandColors = []
+instructionOpen = True
+font = pygame.font.Font(None, size=40)
+instructionText = font.render("Left click to draw", False, "black")
+instructionText2 = font.render("Space to exit the instructions", False, "black")
 
 def color(colorType, X, Y):
     colors = {
@@ -34,10 +39,6 @@ def color(colorType, X, Y):
         "water": 'blue',
         "lava": 'red',
         "steam": 'white',
-        "tree": 'darkgreen',
-        "coal": 'darkgray',
-        "oil": 'darkred',
-        "fire": 'orange'
     }
     # I used chatgpt to help me, turns out I was returning the entire dictionary
     return colors.get(colorType, 'red')
@@ -75,7 +76,7 @@ def blockCheck(Y, X):
         elif twoDList[Y+1][X-1][0] == "blank" and twoDList[Y][X-1][0] == "blank":
             swapPos(X, Y, X-1, Y+1)
         elif twoDList[Y+1][X+1][0] == "blank" and twoDList[Y][X+1][0] == "blank":
-            swapPos(X, Y, X+2, Y+1)
+            swapPos(X, Y, X+1, Y+1)
         elif twoDList[Y+1][X][0] == "water":  
             swapPos(X, Y, X, Y+1)
 
@@ -155,7 +156,24 @@ for i2 in range(tilesY + (borderThickness * 2)):
         rowList.append((random.randint(205,215),random.randint(175,185),random.randint(135,145)))
     sandColors.append(rowList)
 
+
+
 while True:
+    
+    while instructionOpen == True:
+        screen.fill('lightblue')
+        screen.blit(instructionText, (screenX/2-110, screenY/2-40))
+        screen.blit(instructionText2, (screenX/2-110, screenY/2))
+        events = pygame.event.get()
+        for event in events:
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    instructionOpen = False
+        pygame.display.flip()
+
     events = pygame.event.get()
     for event in events:
         if event.type == pygame.QUIT:
@@ -203,7 +221,7 @@ while True:
             pygame.draw.rect(screen, color(twoDList[drawingY+borderThickness][drawingX+borderThickness][0], drawingX, drawingY), (drawingX * tileSize, drawingY * tileSize, tileSize, tileSize))
             # Boarder
             #pygame.draw.rect(screen, "black", (drawingX * tileSize, drawingY * tileSize, tileSize, tileSize), tileSize // 10)
-    
+
     #time.sleep(0.05)
 
     pygame.display.update()
