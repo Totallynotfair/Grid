@@ -29,6 +29,8 @@ instructionOpen = True
 font = pygame.font.Font(None, size=40)
 instructionText = font.render("Left click to draw", False, "black")
 instructionText2 = font.render("Space to exit the instructions", False, "black")
+instructionText3 = font.render("You need to press different keys to change your material", False, "black")
+instructionText4 = font.render("S:Sand W:Water R:Rock M:Metal B:Blank L:Lava", False, "black")
 
 def color(colorType, X, Y):
     colors = {
@@ -103,9 +105,17 @@ def blockCheck(Y, X):
             swapPos(X, Y, X-1, Y+1)
         elif twoDList[Y+1][X+1][0] == "blank" and twoDList[Y][X+1][0] == "blank":
             swapPos(X, Y, X+1, Y+1)
+        elif twoDList[Y+1][X-1][0] == "steam" and twoDList[Y][X-1][0] == "steam":
+            swapPos(X, Y, X-1, Y+1)
+        elif twoDList[Y+1][X+1][0] == "steam" and twoDList[Y][X+1][0] == "steam":
+            swapPos(X, Y, X+1, Y+1)
         elif twoDList[Y][X-1][0] == "blank":
             swapPos(X, Y, X-1, Y)
         elif twoDList[Y][X+1][0] == "blank":
+            swapPos(X, Y, X+1, Y)
+        elif twoDList[Y][X-1][0] == "steam":
+            swapPos(X, Y, X-1, Y)
+        elif twoDList[Y][X+1][0] == "steam":
             swapPos(X, Y, X+1, Y)
 
             # -----LAVA----- #
@@ -162,8 +172,10 @@ while True:
     
     while instructionOpen == True:
         screen.fill('lightblue')
-        screen.blit(instructionText, (screenX/2-110, screenY/2-40))
-        screen.blit(instructionText2, (screenX/2-110, screenY/2))
+        screen.blit(instructionText, (screenX/8, screenY/2-80))
+        screen.blit(instructionText2, (screenX/8, screenY/2+80))
+        screen.blit(instructionText3, (screenX/8, screenY/2-30))
+        screen.blit(instructionText4, (screenX/8, screenY/2+30))
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.QUIT:
