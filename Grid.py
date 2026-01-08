@@ -1,3 +1,8 @@
+#Powderer
+#Emmett Faris
+#A sandbox game
+#January 8th 2026
+
 import pygame
 import sys
 import random
@@ -13,7 +18,7 @@ tilesX = 60
 tilesY = 60
 x = 0
 y = 0
-screenX = tileSize * tilesX
+screenX = tileSize * tilesX + 60
 screenY = tileSize * tilesY
 screen = pygame.display.set_mode((screenX, screenY))
 mouseDown = False
@@ -28,12 +33,14 @@ twoDList = []
 sandColors = []
 instructionOpen = True
 font = pygame.font.Font(None, size=40)
+smallFont = pygame.font.SysFont("arial", 15)
 instructionText = font.render("Left click to draw", False, "black")
 instructionText2 = font.render("Space to exit the instructions", False, "black")
 instructionText3 = font.render("You need to press different keys to change your material", False, "black")
 instructionText4 = font.render("S:Sand W:Water R:Rock M:Metal B:Blank L:Lava", False, "black")
 instructionText5 = font.render("Some combinations make new materials, like steam", False, "black")
-paintSize = 3
+instructionText6 = font.render("You can press numbers 1-3 to change the size of your paint brush", False, "black")
+paintSize = 1
 
 #Makes them colorful
 def color(colorType, X, Y):
@@ -49,21 +56,21 @@ def color(colorType, X, Y):
     # I used chatgpt to help me, turns out I was returning the entire dictionary
     return colors.get(colorType, 'red')
 
-#Makes the entire grid random materials. Not used right now
-def getAMat():
-    material = random.randint(1,6)
-    if material == 1:
-        return "sand"
-    elif material == 2:
-        return "water"
-    elif material == 3:
-        return "metal"
-    elif material == 4:
-        return "rock"
-    elif material == 5:
-        return "lava"
-    else:
-        return "blank"
+#for testing: Makes the entire grid random materials.
+# def getAMat():
+#     material = random.randint(1,6)
+#     if material == 1:
+#         return "sand"
+#     elif material == 2:
+#         return "water"
+#     elif material == 3:
+#         return "metal"
+#     elif material == 4:
+#         return "rock"
+#     elif material == 5:
+#         return "lava"
+#     else:
+#         return "blank"
 
 #Swaps the position of two blocks
 def swapPos(X1, Y1, X2, Y2):
@@ -184,11 +191,12 @@ while True:
     #Menu
     while instructionOpen == True:
         screen.fill('lightblue')
-        screen.blit(instructionText, (screenX/8, screenY/2-80))
-        screen.blit(instructionText2, (screenX/8, screenY/2+130))
-        screen.blit(instructionText3, (screenX/8, screenY/2-30))
-        screen.blit(instructionText4, (screenX/8, screenY/2+30))
-        screen.blit(instructionText5, (screenX/8, screenY/2+80))
+        screen.blit(instructionText, (10, (tilesY*tileSize)/2-80))
+        screen.blit(instructionText2, (10, (tilesY*tileSize)/2+180))
+        screen.blit(instructionText3, (10, (tilesY*tileSize)/2-30))
+        screen.blit(instructionText4, (10, (tilesY*tileSize)/2+30))
+        screen.blit(instructionText5, (10, (tilesY*tileSize)/2+80))
+        screen.blit(instructionText6, (10, (tilesY*tileSize)/2+130))
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.QUIT:
@@ -207,8 +215,8 @@ while True:
             sys.exit()
 
     #Checks the entire grid
-    for checkingY in range(0, screenY // tileSize):
-        for checkingX in range(0, screenX // tileSize):
+    for checkingY in range(0, tilesY):
+        for checkingX in range(0, tilesX):
             # Checks from bottom right to top left
             blockCheck((tilesY - checkingY), (tilesX - checkingX))          
 
@@ -230,21 +238,26 @@ while True:
         paintType = "blank"
     elif keys[pygame.K_l]:
         paintType = "lava"
+    elif keys[pygame.K_1]:
+        paintSize = 1
+    elif keys[pygame.K_2]:
+        paintSize = 2
+    elif keys[pygame.K_3]:
+        paintSize = 3
+    elif keys[pygame.K_4]:
+        paintSize = 4
+    elif keys[pygame.K_5]:
+        paintSize = 5
 
-    #Bigger paint of materials
+    #Painting materials
     if mouseDown:
-        if x > 0 and x < screenX and y > 0 and y < screenY:
+        if x > 0 and x < (tilesX*tileSize) and y > 0 and y < (tilesY*tileSize):
             for i in range(paintSize):
                 for i2 in range(paintSize):
-                    twoDList[math.floor(y/tileSize)+(i-paintSize//2)][math.floor(x/tileSize)+(i2-paintSize//2)].pop(0)
-                    twoDList[math.floor(y/tileSize)+(i-paintSize//2)][math.floor(x/tileSize)+(i2-paintSize//2)].insert(0, paintType)
+                    #if math.floor(y/tileSize)+(i-paintSize//2+1) > 0 and math.floor(y/tileSize)+(i-paintSize//2+1) < screenY and math.floor(x/tileSize)+(i2-paintSize//2+1) > 0 and math.floor(x/tileSize)+(i2-paintSize//2+1) < screenX:
+                    twoDList[math.floor(y/tileSize)+(i-paintSize//2+1)][math.floor(x/tileSize)+(i2-paintSize//2+1)].pop(0)
+                    twoDList[math.floor(y/tileSize)+(i-paintSize//2+1)][math.floor(x/tileSize)+(i2-paintSize//2+1)].insert(0, paintType)
 
-
-    #Paints the materials
-    # if mouseDown:
-    #     if x > 0 and x < screenX and y > 0 and y < screenY:
-    #         twoDList[math.floor(y/tileSize)+1][math.floor(x/tileSize)+1].pop(0)
-    #         twoDList[math.floor(y/tileSize)+1][math.floor(x/tileSize)+1].insert(0, paintType)
     buttons = pygame.mouse.get_pressed()
     if not any(buttons):
         mouseDown = False
@@ -252,15 +265,29 @@ while True:
         mouseDown = True
 
     #Prints the entire screen
-    screen.fill('lightblue')
-    for drawingY in range(0, screenY // tileSize):
-        for drawingX in range(0, screenX // tileSize):
+    for drawingY in range(0, tilesY):
+        for drawingX in range(0, tilesX):
             # Inner
             pygame.draw.rect(screen, color(twoDList[drawingY+borderThickness][drawingX+borderThickness][0], drawingX, drawingY), (drawingX * tileSize, drawingY * tileSize, tileSize, tileSize))
             # Boarder
             #pygame.draw.rect(screen, "black", (drawingX * tileSize, drawingY * tileSize, tileSize, tileSize), tileSize // 10)
     
+    pygame.draw.rect(screen, 'darkgrey', (screenX-60, 0, 60, screenY))
+    #for i in range():
+    text = smallFont.render("S:Sand", True, "black")
+    screen.blit(text, (screenX-60, 5))
+    text = smallFont.render("R:Rock", True, "black")
+    screen.blit(text, (screenX-60, 25))
+    text = smallFont.render("W:Water", True, "black")
+    screen.blit(text, (screenX-60, 45))
+    text = smallFont.render("M:Metal", True, "black")
+    screen.blit(text, (screenX-60, 65))
+    text = smallFont.render("L:Lava", True, "black")
+    screen.blit(text, (screenX-60, 85))
+    text = smallFont.render("B:Blank", True, "black")
+    screen.blit(text, (screenX-60, 105))
+
     #Delay if we wanted
-    #time.sleep(0.05)
+    #time.sleep(0.2)
 
     pygame.display.update()
