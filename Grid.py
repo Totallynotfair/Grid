@@ -244,17 +244,12 @@ while True:
         paintSize = 2
     elif keys[pygame.K_3]:
         paintSize = 3
-    elif keys[pygame.K_4]:
-        paintSize = 4
-    elif keys[pygame.K_5]:
-        paintSize = 5
 
     #Painting materials
     if mouseDown:
         if x > 0 and x < (tilesX*tileSize) and y > 0 and y < (tilesY*tileSize):
             for i in range(paintSize):
                 for i2 in range(paintSize):
-                    #if math.floor(y/tileSize)+(i-paintSize//2+1) > 0 and math.floor(y/tileSize)+(i-paintSize//2+1) < screenY and math.floor(x/tileSize)+(i2-paintSize//2+1) > 0 and math.floor(x/tileSize)+(i2-paintSize//2+1) < screenX:
                     twoDList[math.floor(y/tileSize)+(i-paintSize//2+1)][math.floor(x/tileSize)+(i2-paintSize//2+1)].pop(0)
                     twoDList[math.floor(y/tileSize)+(i-paintSize//2+1)][math.floor(x/tileSize)+(i2-paintSize//2+1)].insert(0, paintType)
 
