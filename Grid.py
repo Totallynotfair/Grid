@@ -34,12 +34,13 @@ sandColors = []
 instructionOpen = True
 font = pygame.font.Font(None, size=40)
 smallFont = pygame.font.SysFont("arial", 15)
-instructionText = font.render("Left click to draw", False, "black")
-instructionText2 = font.render("Space to exit the instructions", False, "black")
-instructionText3 = font.render("You need to press different keys to change your material", False, "black")
-instructionText4 = font.render("S:Sand W:Water R:Rock M:Metal B:Blank L:Lava", False, "black")
-instructionText5 = font.render("Some combinations make new materials, like steam", False, "black")
-instructionText6 = font.render("You can press numbers 1-3 to change the size of your paint brush", False, "black")
+instructionText = font.render("Left click to draw.", False, "black")
+instructionText2 = font.render("Space to exit the instructions.", False, "black")
+instructionText3 = font.render("You need to press different keys to change your materia.l", False, "black")
+instructionText4 = font.render("S:Sand W:Water R:Rock M:Metal B:Blank L:Lava.", False, "black")
+instructionText5 = font.render("Some combinations make new materials, like steam.", False, "black")
+instructionText6 = font.render("You can press numbers 1-3 to change the size of your paint brush.", False, "black")
+instructionText7 = font.render("Press 4 to open the instructions.", False, "black")
 paintSize = 1
 
 #Makes them colorful
@@ -192,11 +193,12 @@ while True:
     while instructionOpen == True:
         screen.fill('lightblue')
         screen.blit(instructionText, (10, (tilesY*tileSize)/2-80))
-        screen.blit(instructionText2, (10, (tilesY*tileSize)/2+180))
+        screen.blit(instructionText2, (10, (tilesY*tileSize)/2+230))
         screen.blit(instructionText3, (10, (tilesY*tileSize)/2-30))
         screen.blit(instructionText4, (10, (tilesY*tileSize)/2+30))
         screen.blit(instructionText5, (10, (tilesY*tileSize)/2+80))
         screen.blit(instructionText6, (10, (tilesY*tileSize)/2+130))
+        screen.blit(instructionText7, (10, (tilesY*tileSize)/2+180))
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.QUIT:
@@ -244,6 +246,8 @@ while True:
         paintSize = 2
     elif keys[pygame.K_3]:
         paintSize = 3
+    elif keys[pygame.K_4]:
+        instructionOpen = True
 
     #Painting materials
     if mouseDown:
